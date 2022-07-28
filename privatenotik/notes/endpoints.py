@@ -1,8 +1,16 @@
 from fastapi import APIRouter
 
+from core.database import engine
+from notes.validators import NoteSerializer
+from notes.models import Note
+from sqlalchemy.ext.asyncio import AsyncSession
+
 router = APIRouter(prefix='/notes')
 
 
-@router.get('/')
-async def get_main_page_info():
-    return {'test': '5'}
+@router.post('/note', response_model=NoteSerializer)
+async def create_note(note: NoteSerializer):
+    async with AsyncSession(bind=engine) as session:
+        session.add(Note(**note.dict()))
+        await session.commit()
+    return note

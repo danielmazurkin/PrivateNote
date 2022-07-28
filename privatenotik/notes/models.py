@@ -9,4 +9,4 @@ class Note(Base):
 
     id = Column(Integer, primary_key=True)
     text = Column(String)
-    hash = Column(Text)
+    hash = Column(Text, nullable=True)
