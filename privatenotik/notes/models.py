@@ -4,7 +4,8 @@ from sqlalchemy import Integer
 from sqlalchemy import String
 from sqlalchemy import Text
 from sqlalchemy import Boolean
-
+from core.asgi import ASGI_SERVER_HOST
+from core.asgi import ASGI_SERVER_PORT
 from core.database import Base
 
 
@@ -17,6 +18,9 @@ class Note(Base):
     text = Column(String)
     hash = Column(Text, nullable=True)
     is_view = Column(Boolean, nullable=True)
+
+    def create_link_by_hash(self):
+        return f'{ASGI_SERVER_HOST}:{ASGI_SERVER_PORT}/notes/note?hash={self.hash}'
 
 
 @event.listens_for(Note, "before_insert")
