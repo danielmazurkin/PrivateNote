@@ -11,6 +11,7 @@ router = APIRouter(prefix='/notes')
 
 @router.post('/note', response_model=NoteSerializer)
 async def create_note(note: NoteSerializer):
+    """Создание заметки."""
     with Session(bind=engine) as session:
         session.add(Note(**note.dict()))
         session.commit()
@@ -18,5 +19,16 @@ async def create_note(note: NoteSerializer):
 
 
 @router.get('/note')
-async def get_note(hash_note: str):
+async def get_note_text(hash_note: str):
+    """Получение текста по заметке."""
     ...
+
+
+@router.get('/link')
+async def link_note(note_id: int) -> str:
+    """Cформировать ссылку с хэшом."""
+    with Session(bind=engine) as session:
+        note = session.query(Note).filter(Note.id == note_id).first()
+        link_by_hash = note.create_link_by_hash()
+
+    return link_by_hash
