@@ -1,9 +1,10 @@
+from sqlalchemy import Boolean
 from sqlalchemy import Column
 from sqlalchemy import event
 from sqlalchemy import Integer
 from sqlalchemy import String
 from sqlalchemy import Text
-from sqlalchemy import Boolean
+
 from core.asgi import ASGI_SERVER_HOST
 from core.asgi import ASGI_SERVER_PORT
 from core.database import Base

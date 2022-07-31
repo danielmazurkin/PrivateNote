@@ -20,4 +20,3 @@ async def create_note(note: NoteSerializer):
 @router.get('/note')
 async def get_note(hash_note: str):
     ...
-
