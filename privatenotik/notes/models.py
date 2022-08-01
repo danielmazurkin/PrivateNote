@@ -1,3 +1,4 @@
+from faker import Faker
 from sqlalchemy import Boolean
 from sqlalchemy import Column
 from sqlalchemy import event
@@ -8,6 +9,9 @@ from sqlalchemy import Text
 from core.asgi import ASGI_SERVER_HOST
 from core.asgi import ASGI_SERVER_PORT
 from core.database import Base
+
+
+fake = Faker()
 
 
 class Note(Base):
@@ -22,6 +26,11 @@ class Note(Base):
 
     def create_link_by_hash(self):
         return f'{ASGI_SERVER_HOST}:{ASGI_SERVER_PORT}/notes/note?hash_note={self.hash}'
+
+    @staticmethod
+    def random_note():
+        text = fake.text()
+        return {"text": text}
 
 
 @event.listens_for(Note, "before_insert")

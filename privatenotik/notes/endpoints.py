@@ -11,7 +11,7 @@ from notes.validators import NoteSerializer
 router = APIRouter(prefix='/notes')
 
 
-@router.post('/note', response_model=NoteSerializer)
+@router.post('/note', response_model=NoteSerializer, status_code=201)
 async def create_note(note: NoteSerializer):
     """Создание заметки."""
     with Session(bind=engine) as session:
