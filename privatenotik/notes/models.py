@@ -17,11 +17,11 @@ class Note(Base):
 
     id = Column(Integer, primary_key=True)
     text = Column(String)
-    hash = Column(Text, nullable=True)
+    hash = Column(Text, nullable=True, default=False)
     is_view = Column(Boolean, nullable=True)
 
     def create_link_by_hash(self):
-        return f'{ASGI_SERVER_HOST}:{ASGI_SERVER_PORT}/notes/note?hash={self.hash}'
+        return f'{ASGI_SERVER_HOST}:{ASGI_SERVER_PORT}/notes/note?hash_note={self.hash}'
 
 
 @event.listens_for(Note, "before_insert")
